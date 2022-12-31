@@ -4,7 +4,7 @@
 
     switch($_FILES['arquivo']['type']):
         case 'image/jpeg';
-        case 'image/jpeg';
+        case 'image/pjpeg';
             $imagem_temporaria = imagecreatefromjpeg($_FILES['arquivo']['tmp_name']);
             $largura_original = imagesx($imagem_temporaria);
             $altura_original = imagesy($imagem_temporaria);

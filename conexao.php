@@ -1,17 +1,15 @@
 <?php
+
 $host = "localhost";
-$user = "root";
-$pass = "";
-$bd = "jabba";
+$user ="root";
+$pass ="";
+$dbname ="jabba";
+$port = 3306;
 
-$conexao = new mysqli($host, $user, $pass, $bd);
-
-if ($conexao->connect_errno) {
-    echo "Erro na conexao ". $conexao->connect_erro;
-    exit();
+try{
+    //conexão com a porta
+    $conn = new PDO("mysql:host=$host;port=$port;dbname=".$dbname, $user, $pass);
+    //echo "Conexão realizada com sucesso";
+}catch(PDOException $err){
+    echo "Falha ao realizar a conexão com o Banco de dados. ERRO: " .$err->getMessage();
 }
-
-
-
-
-?>

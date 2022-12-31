@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Title -->
+    <title>One Music - Modern Music HTML5 Template</title>
+    <!-- Favicon -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a href="index.html" class="nav-brand logo">
+                            <!-- <img src="img/core-img/logo.png" alt=""> -->
+                            <p style="color:#fff">JABBA-MUSIC</p>
+                        </a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="event.html">Eventos</a></li>
+                                    <li><a role="button" data-toggle="modal" data-target="#myModalPag">Doação</a></li>
+                                    <li><a role="button" data-toggle="modal" data-target="#myModalUpload">Upload</a></li>
+                                    <li><a href="contact.html">Contactos</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        <a href="login.html" id="loginBtn">Login / Cadastro</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Nav End -->
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
+        <div class="bradcumbContent">
+            <p>Publicite seus eventos<p>
+            <h3>Registro de Eventos</h3>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div>
+					<form method="POST" action="php/storeFiles.php" ectype="multipart/form-data">
+						<div class="row">
+							<div class="col-14 col-sm-6">
+							<div class="form-group">
+								<label for="evento">Evento</label>
+								<input type="text" class="form-control" placeholder="Evento" id="evento" name="evento">
+							</div>
+						</div>
+						
+							<div class="col-sm-2 col-md-6">
+								<div class="form-group">
+									<label for="endereco">Endereço</label>
+									<input type="text" placeholder="Endereço" class="form-control" id="enderco" name="endereco" required>
+								</div>
+							</div>
+												
+							<div class="col-sm-3 col-md-3">
+								<div class="form-group">
+									<label for="data">Data</label>
+									<input type="date" id="data" name="data" class="form-control">
+								</div>
+							</div>
+							
+							<div class="col-sm-3 col-md-2">
+								<div class="form-group">
+									<label for="hora">Hora</label>
+									<input type="time" id="hora" name="hora" class="form-control">
+								</div>
+							</div>
+						</div>
+						
+						<div class="bradcumbContent">
+								<p>Valor de Bilhete de entrada<p>
+							</div>
+						<div class="row">
+							<div class="col-sm-3 col-md-3">
+								<div class="form-group">
+									<label for="valor">Tipo Evento</label>
+									<select class="form-control">
+										<option>Entrada Free</option>
+										<option>Bilhete</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3 col-md-2">
+								<div class="form-group">
+									<label for="valor">Homem (Kz)</label>
+									<input type="text" id="valor" name="valor" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-3 col-md-2">
+								<div class="form-group">
+									<label for="valor">Mulher (Kz)</label>
+									<input type="text" id="valor" name="valor" class="form-control">
+								</div>
+							</div>
+						</div>
+
+                        <div class="row">
+                            <div class="">
+                                <label>Carregar Imagem de Capa</label>
+                                <input type="file" accept=".jpg, .png, image/jpg, image/png" id="fileInput" name="arquivo" hidden>
+                                <br><a type="button" class="btn btn-primary" id="btnCad"><span class="fa fa-upload"></span> Ficheiro...</a>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn oneMusic-btn mt-30">Salvar</button>
+					</form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Login Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row d-flex flex-wrap align-items-center">
+                <div class="col-12 col-md-6">
+                    <a href="index.html" class="nav-brand logo">
+                        <!-- <img src="img/core-img/logo.png" alt=""> -->
+                        <p style="color:#fff">JABBA-MUSIC</p>
+                    </a>
+                    <p class="copywrite-text"><a href="#">
+                        Copyright &copy;2022 by <a href="https://startechcorp.com" target="_blank">StarTech Corp.</a>
+                    </p>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="footer-nav">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="event.html">Eventos</a></li>
+                            <li><a href="contact.html">Contactos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+    <script>
+        $(document).ready(function (){
+            $('#btnCad').click(function () {
+                var fInput = document.getElementById('fileInput');
+                fInput.click();
+                
+                // var imV = fInput.val();
+                // alert(imV);
+                // $.ajax({
+                //     url:"uploadFile.php",
+                //     method:"POST",
+                //     data:{img:imV},
+                //     success:function(data) {
+                //         if (data == "OK")
+                //             alert("Feito");
+                //     }
+                // });
+            });
+
+            document.getElementById('fileInput').addEventListener("change", function () {
+                    alert(fInput.val());
+                });
+        });
+    </script>
+</body>
+
+</html>

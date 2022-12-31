@@ -10,18 +10,25 @@
     //echo password_hash(123456, PASSWORD_DEFAULT);
     
    if(!empty($dados['sendlogin'])){
-
-        //var_dump($dados);
-       $query_usuario =  "SELECT id, nome, usuario, senha_usuario FROM usuarios WHERE usuario =:usuario LIMIT 1";
+        echo "Fase 1";
+       //var_dump($dados);
+       $query_usuario =  "SELECT id, nome, usuario, senha_usuario, sits_usuario_id FROM usuarios WHERE usuario =:usuario LIMIT 1";
        $resultado_usuario = $conn->prepare($query_usuario);
        $resultado_usuario->bindparam(':usuario', $dados['email'], PDO::PARAM_STR );
        $resultado_usuario->execute();
-    
-        if(($resultado_usuario) AND ($resultado_usuario->rowCount() != 0)){
-            $row_usuario = $resultado_usuario->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($dados['senha'], $row_usuario['senha_usuario'])){
+       echo $resultado_usuario->execute();
+       if(($resultado_usuario) AND ($resultado_usuario->rowCount() != 0)){
+            $row_usuario = $resultado_usuario->fetch(PDO::FETCH_ASSOC); 
+            if($row_usuario['sits_usuario_id'] != 1){
+                $_SESSION['confirmacao-email-login'] = '<div class="alert alert-danger" role="alert">
+                        <i class="dripicons-wrong me-2"></i> Necessário confirmar o cadastro no seu <strong>E-mail</strong>
+                        </div>';
+            }
+            
+            elseif(password_verify($dados['senha'], $row_usuario['senha_usuario'])){
                 $_SESSION['id'] = $row_usuario['id'];
                 $_SESSION['nome'] = $row_usuario['nome'];
+                $_SESSION['usuario'] = $row_usuario['usuario'];
                 $_SESSION['estado'] = "conectado";
                 //recaptcha
                 if(isset($_POST['g-recaptcha-response'])){
@@ -56,14 +63,14 @@
         }
         else{
             $_SESSION['msg'] = '<div class="alert alert-danger" role="alert">
-            <i class="dripicons-wrong me-2"></i><strong>Usuário inválido</strong> Por Favor tente novamente!
+            <i class="dripicons-wrong me-2"></i><strong>Usuário inválido</strong> Por Favor tente novamente!!!!
         </div>';
         }   
 }else{
 
 }
 
-
+$_SESSION['teste'] = 1;
    
 
    //'".$dados['email']."'
@@ -86,14 +93,17 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Title -->
     <title>Jabba-Music</title>
-
+    
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
+    
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="complement.css">
-
+    <script src="js/bootstrap/bootstrap.min"></script>
+    
+    
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
     
     
@@ -178,9 +188,30 @@
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
                                     <!-- Login/Register -->
+
+                                     <!-- começou aqui -- foto perfil -->
+
+                                     
+                                           
+                                            
+                                        
+                                        
+                                    
+                                          <div class="login-register-btn mr-50">
+                                                <a href="login.html" id="loginBtn">Login / Cadastro</a>
+                                            </div>
+
+                                           
+
+                                    
+                                <!-- terminou aqui -- foto perfil-->
+
+                                       <!-- -o que estava
                                     <div class="login-register-btn mr-50">
                                         <a href="login.html" id="loginBtn">Login / Cadastro</a>
                                     </div>
+
+                                     -o que estava fim-->
 
                                     <!-- Cart Button -->
                                     <!--<div class="cart-btn">
@@ -229,6 +260,10 @@
                                     echo $_SESSION['alerta'];
                                     unset($_SESSION['alerta']);
                                 }
+                                if(isset($_SESSION['confirmacao-email-login'])){
+                                    echo $_SESSION['confirmacao-email-login'];
+                                    unset($_SESSION['confirmacao-email-login']);
+                                }
                             ?>
 
                         <!-- Login Form -->
@@ -247,11 +282,11 @@
                                 <div class="g-recaptcha" data-sitekey="6LfFWRYhAAAAAKYM-jXwcKR9Mmpe4JrDKXP4Csfk"></div>
 
                                
-                                <input type="submit" name="sendlogin" class="btn oneMusic-btn mt-30" value="login" >
+                                <input type="submit" name="sendlogin" class="btn oneMusic-btn mt-30" value="login">
                             </form>
                             <br>
                             <a href="recuperar_senha.php">Esqueceu a sua senha?</a>
-                            
+                            <br><br>
                             <!--  <a type="submit" class="btn oneMusic-btn mt-30" href="cadastro.html">Cadastrar-se</a> -->
                             <div class="bradcumbContent">
 								<p>Ainda não possui uma conta? Crie uma: <a href="cadastro.php"> criar conta</a><p>
@@ -303,6 +338,8 @@
     <!-- Active js -->
     <script src="js/active.js"></script>
 
+
+   
    
 </body>
 

@@ -1,8 +1,12 @@
-<?php
+<?php 
+session_start();
 
+ob_start();
 include("conexao.php");
 
-$query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or die($conexao->error);
+if((!isset($_SESSION['id'])) AND (!isset($_SESSION['nome'])) AND (!isset($_SESSION['estado']))){
+    header("Location: login.php");
+}
 
 ?>
 
@@ -19,8 +23,10 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="complement.css">
+   
+
 </head>
 
 <body>
@@ -43,7 +49,7 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav">
                         <!-- Nav brand -->
-                        <a href="index.php" class="nav-brand logo">
+                        <a href="index.html" class="nav-brand logo">
                             <!-- <img src="img/core-img/logo.png" alt=""> -->
                             <p style="color:#fff">JABBA-MUSIC</p>
                         </a>
@@ -60,19 +66,55 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="index.php">Home</a></li>
+                                    <li><a href="index.html">Home</a></li>
                                     <li><a href="event.html">Eventos</a></li>
-                                    <li><a href="musica.php">Musicas</a></li>
                                     <li><a role="button" data-toggle="modal" data-target="#myModalPag">Doação</a></li>
                                     <li><a role="button" data-toggle="modal" data-target="#myModalUpload">Upload</a></li>
-                                    <li><a href="contact.php">Contactos</a></li>
+                                    <li><a href="contact.html">Contactos</a></li>
                                 </ul>
+                                <span id="span">-----------------------------------------------</span>
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
                                     <!-- Login/Register -->
-                                    <div class="login-register-btn mr-50">
-                                        <a href="login.php" id="loginBtn">Login / Cadastro</a>
-                                    </div>
+
+
+                                    <!-- começou aqui -- foto perfil -->
+                                    <?php
+                                        if($_SESSION['estado'] == "conectado"){
+                                            ?>
+
+                                                <div class="ts">
+                                                <a href=""></a> <span>-------</span>
+                                                </div>
+                                               
+                                                <div class="action">
+                                                    <div class="fotoperfil">
+                                                            <img src="img/Machya.jpg" alt="" onclick="menuToggle();">
+                                                           <a href="#"> <img src="img/tbarra_64.png" alt="erro" class="activa" onclick="menuToggle();"></a>
+                                                    </div>
+                                                    <div class="menu">
+                                                    <h3>someone Famous <br> <span>Web designer</span> </h3>
+                                                        <ul>
+                                                            <li><a href="">My profile</a></li>
+                                                            <li><a href="">My settings</a></li>
+                                                            <li><a href="">My profile</a></li>
+                                                            <li><a href="">My profile</a></li>
+                                                            <li><a href="">My profile</a></li>
+                                                            <li><a href="">My profile</a></li>
+                                                        </ul>
+                                                    </div>
+                                               </div>
+                                               
+                                            <?php
+                                        }
+                                    ?>
+                                    <br><br><br>
+                                   
+                                    
+                                <!-- terminou aqui -- foto perfil-->
+
+
+
                                 </div>
                             </div>
                             <!-- Nav End -->
@@ -80,9 +122,21 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
                     </nav>
                 </div>
             </div>
+                <div class="boxlist">
+                    <ul>
+                        <li><a href="perfil+.php">Perfil</a></li>
+                        <li><a href="">Configurações</a></li>
+                        <li><a href="">views</a></li>
+                        <li><a href="sair.php">Terminar sessão</a></li>
+                    </ul>
+                </div>
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
+
+    
+
+
 
       <!-- Janela Modal para Pagamento -->
       <div id="myModalPag" class="modal fade" role="dialog">
@@ -102,7 +156,7 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
               </span>
               <br>
               <br><h3 style="text-align: center; font-size: 110%">
-                AO006.0006.0000.9755.7022.3017.9
+                AO06.0006.0000.9755.7022.3017.9
                 <p>STARTECH CORP</p>
               </h3>
             </div>
@@ -186,308 +240,295 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
 
     <!-- ##### Plays Start ##### -->
     <section class="oneMusic-buy-now-area has-fluid bg-gray section-padding-100">
-        <div class="row container">
-            <h3>Musicas</h3>
-        </div>
-        <div class="row">
-
-        <?php
-             while ($dados = $query->fetch_assoc()) {
-                $m = strtoupper($dados['nome_artista']." - ".$dados['titulo_musica']);
-        ?>
-            <!-- Single Album Area -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+            <div class="row">
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                     <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
                         <div class="album-thumb">
-                            <img src="<?php echo "Arquivos/img/".$dados['capa']; ?>" alt="">
+                            <img src="img/bg-img/b1.jpg" alt="">
                             <div class="play-icon">
-                                <a href="#" class="video--download--btn">
-                                    <span class="icon-play-button" id="play_<?php echo $dados['id'];?>" onclick="playM('play_<?php echo $dados['id'];?>', 'audiplay_<?php echo $dados['id'];?>')"></span>
+                                <a href="#" class="video--download--btn" onclick="playAud()">
+                                    <span class="icon-play-button"></span>
                                 </a>
                             </div>
                             <div class="down-icon">
-                                <a href="download.php?file=<?php echo $dados['musica'];?>&nome=<?php echo $m;?>" class="video--play--btn">
-                                    <span class="icon-download" download="<?php echo "Arquivos/musicas/".$dados['musica'];?>"></span>
+                                <a href="#" class="video--play--btn">
+                                    <span class="icon-download" download="C:\Users\VESPA\Music\06-Nzala Remake c- Paulo Flores.mp3"></span>
                                 </a>
                             </div>
                         </div>
                         <div class="album-info">
                             <a href="#">
-                                <h5><?php echo $m;?></h5>
+                                <h5>Zala - MC K</h5>
                             </a>
-                            <audio id="audiplay_<?php echo $dados['id'];?>" class="audioplay" src="<?php echo "Arquivos/musicas/".$dados['musica'];?>">
+                            <audio id="audiplay" class="audioplay" src="C:\Users\VESPA\Music\06-Nzala Remake c- Paulo Flores.mp3">
                             </audio>
+                            <p>Radio Station</p>
                         </div>
                     </div>
                 </div>
 
-            <?php } ?>
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b2.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b3.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Jess Parker</h5>
+                            </a>
+                            <p>The Album</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b4.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b2.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b3.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Jess Parker</h5>
+                            </a>
+                            <p>The Album</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="200ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b4.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="400ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b2.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="500ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b3.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Jess Parker</h5>
+                            </a>
+                            <p>The Album</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="600ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b4.jpg" alt="">
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Noises</h5>
+                            </a>
+                            <p>Buble Gum</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Single Album Area -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                    <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                        <div class="album-thumb">
+                            <img src="img/bg-img/b1.jpg" alt="">
+                            <!-- Play Icon -->
+                            <div class="play-icon">
+                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div>
+                        </div>
+                        <div class="album-info">
+                            <a href="#">
+                                <h5>Garage Band</h5>
+                            </a>
+                            <p>Radio Station</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="musica.php" class="btn oneMusic-btn">Ver Mais...<i class="fa fa-angle-double-right"></i></a>
+                        <a href="#" class="btn oneMusic-btn">Mais <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <!-- ##### Buy Now Area End ##### -->
-
-
-
-
-
-
-<section class="events-area oneMusic-buy-now-area has-fluid section-padding-100">
-    <div class="row container mb-0 pb-2">
-            <h3>Eventos</h3>
-    </div>
-    <div class="content py-0">
-        <div class="site-section bg-left-half mb-5">
-            <div class="container owl-2-style">      
-
-                <div class="owl-carousel owl-2">
-
-                    <div class="media-29101">
-                        <div class=" single-event-area ">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e1.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="media-29101">
-                        <div class=" single-event-area ">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e3.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="media-29101">
-                        <div class=" single-event-area">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e2.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="media-29101">
-                        <div class=" single-event-area">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e1.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="media-29101">
-                        <div class=" single-event-area ">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e2.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="media-29101">
-                        <div class=" single-event-area">
-                            <div class="event-thumbnail">
-                                <img src="img/bg-img/e3.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="event-text mt-0">
-                                <h4>Wakanda</h4>
-                                <h5 class="hh5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi</h5>
-                                <div class="event-meta-data">
-                                    <a href="#" class="event-place">Link Space - Kilamba</a>
-                                    <a href="#" class="event-date">13 de Março, 2022</a>
-                                </div>
-                                <a href="#" class="btn see-more-btn">Mais Detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-     </div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                <a href="event.html" class="btn oneMusic-btn">Ver Mais...<i class="fa fa-angle-double-right"></i></a>
-            </div>
-        </div>
-    </div>
-
-</section>
-
-    
-
-
-
-
-
-
-
-    <section class="newsletter-testimonials-area bg-gray section-padding-100">
-        <div class="container">
-            <div class="row">
-
-                <!-- Newsletter Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="newsletter-area mb-100">
-                        <div class="section-heading text-left mb-50">
-                            <!--<p>See what’s new</p>-->
-                            <h2>Subescreve-se para receber notificações</h2>
-                        </div>
-                        <div class="newsletter-form">
-                            <form action="#">
-                                <input type="search" name="search" id="newsletterSearch" placeholder="E-mail">
-                                <button type="submit" class="btn oneMusic-btn">Subescrever <i class="fa fa-angle-double-right"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimonials Area -->
-                <div class="col-12 col-lg-6">
-                    <div class="testimonials-area mb-100 bg-img bg-overlay" style="background-image: url(img/bg-img/bg-3.jpg);">
-                        <div class="section-heading white text-left mb-50">
-                            <!--<p>See what’s new</p>-->
-                            <h2>Comentários</h2>
-                        </div>
-                        <!-- Testimonial Slide -->
-                        <div class="testimonials-slide owl-carousel">
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <p>Nunca foi tão fácil encotrar uma diversão de festa de modo rápido...usando a Jabba-Music tudo fica mais prático e fácil.</p>
-                                <div class="testimonial-info d-flex align-items-center">
-                                    <div class="testimonial-thumb">
-                                        <img src="img/bg-img/t1.jpg" alt="">
-                                    </div>
-                                    <p>William Smith, Usuário</p>
-                                </div>
-                            </div>
-                            <!-- Single Slide -->
-                            <div class="single-slide">
-                                <p>Agora é mais rápido e fácil publicitar os eventos a nível nacional.</p>
-                                <div class="testimonial-info d-flex align-items-center">
-                                    <div class="testimonial-thumb">
-                                        <img src="img/bg-img/a1.jpg" alt="">
-                                    </div>
-                                    <p>Isabel Rosa, Usuário</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- ##### Newsletter & Testimonials Area End ##### -->
-
-    
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading white">
-                        <!--<p>See what’s new</p>-->
-                        <h2>Deixe a sua sua opinião</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <!-- Contact Form Area -->
-                    <div class="contact-form-area">
-                        <form action="#" method="post">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" placeholder="Nome">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="E-mail">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" placeholder="Assunto">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Menssagem"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button class="btn oneMusic-btn mt-30" type="submit">Enviar <i class="fa fa-angle-double-right"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
-
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
@@ -530,9 +571,31 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 12") or
     <script src="js/active.js"></script>
 
     <!-- Play and Pause -->
-    <script src="tocar.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        var au = document.getElementById("audiplay");
+        var ps = document.querySelector('.icon-play-button');
+        ps.onclick = function () {
+            if (ps.className == 'icon-play-button')
+            {
+                au.play();
+                ps.className = 'icon-pause';
+            }
+            else
+            {
+                au.pause();
+                ps.className = 'icon-play-button';
+            }
+            return false;
+        };
+    </script>
+
+        <script>
+            function menuToggle(){
+                const toggleMenu = document.querySelector('.boxlist')
+                toggleMenu.classList.toggle('active')
+            }
+        </script>
+
 </body>
 
 </html>

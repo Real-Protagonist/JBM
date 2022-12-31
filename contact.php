@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+    
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,6 +16,7 @@
     <link rel="icon" href="img/core-img/favicon.ico">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="complement.css">
 </head>
 
 <body>
@@ -27,32 +32,27 @@
 
     <!-- ##### Header Area Start ##### -->
     <header class="header-area">
-        <!-- Navbar Area -->
+        <!-- Navbar -->
         <div class="oneMusic-main-menu">
             <div class="classy-nav-container breakpoint-off">
                 <div class="container">
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
                         <!-- Nav brand -->
                         <a href="index.html" class="nav-brand logo">
                             <!-- <img src="img/core-img/logo.png" alt=""> -->
                             <p style="color:#fff">JABBA-MUSIC</p>
                         </a>
-
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
                             <span class="navbarToggler"><span></span><span></span><span></span></span>
                         </div>
-
                         <!-- Menu -->
                         <div class="classy-menu">
-
                             <!-- Close Button -->
                             <div class="classycloseIcon">
                                 <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                             </div>
-
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
@@ -62,13 +62,41 @@
                                     <li><a role="button" data-toggle="modal" data-target="#myModalUpload">Upload</a></li>
                                     <li><a href="contact.html">Contactos</a></li>
                                 </ul>
-
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
                                     <!-- Login/Register -->
-                                    <div class="login-register-btn mr-50">
-                                        <a href="login.html" id="loginBtn">Login / Register</a>
-                                    </div>
+
+
+                                    <!-- começou aqui -- foto perfil -->
+                                    <?php
+                                        if($_SESSION['estado'] == "conectado"){
+                                            ?>
+
+                                                <div class="ts">
+                                                <a href="">Terminar sessão</a> <span>-------</span>
+                                                </div>
+                                               
+                                               <div class="fotoperfil">
+                                                    <img src="img/Machya.jpg" alt="">
+                                                    <a href="perfil+.php"> <img src="img/tbarra_64.png" alt="erro" class="activa"></a>
+                                               </div>
+                                               
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <div class="login-register-btn mr-50">
+                                                <a href="login.html" id="loginBtn">Login / Cadastro</a>
+                                            </div>
+
+                                            <?php
+                                        }
+                                    ?>
+
+                                    
+                                <!-- terminou aqui -- foto perfil-->
+
+
+
                                 </div>
                             </div>
                             <!-- Nav End -->
