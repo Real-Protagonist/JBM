@@ -203,10 +203,10 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 18") or
                 $m = strtoupper($dados['nome_artista']." - ".$dados['titulo_musica']);
         ?>
             <!-- Single Album Area -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2" id="item_<?= $dados['id']; ?>">
                     <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
                         <div class="album-thumb">
-                            <img src="<?php echo "Arquivos/img/".$dados['capa']; ?>" alt="">
+                            <img src="<?php echo "Arquivos/img/".$dados['capa']; ?>" alt="" id="foto_cover">
                             <div class="play-icon">
                                 <a href="#" class="video--download--btn">
                                     <span class="icon-play-button" id="play_<?php echo $dados['id'];?>" onclick="playM('play_<?php echo $dados['id'];?>', 'audiplay_<?php echo $dados['id'];?>')"></span>
@@ -528,26 +528,29 @@ $query = $conexao->query("SELECT * FROM tb_musica ORDER BY id DESC LIMIT 18") or
                  -->
                 <!-- <i class="fa-solid fa-shuffle"></i> -->
                 <i class="fa-solid fa-backward-step"></i>
-                <i class="play-pause fas fa-play"></i>
+                <a href="#" id="btnP">
+                    <i class="play-pause fas fa-play"></i>
+                </a>
                 <i class="fa-solid fa-forward-step"></i>
                 <!-- <i class="fa-solid fa-arrow-rotate-left"></i> -->
             </div>
-            <div class="progress-container">
+            <!-- <div class="progress-container">
                 <span>0:30</span>
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
                 <span>2:12</span>
-            </div>
+            </div> -->
         </div>
         <div class="other-features">
             <!-- <i class="fa-solid fa-list"></i> -->
             <!-- <i class="fa-sharp fa-solid fa-desktop"></i> -->
             <div class="volume-bar">
                 <i class="fa-sharp fa-solid fa-volume-low"></i>
-                <div class="progress-bar">
+                <input type="range" step="5" value="70">
+                <!-- <div class="progress-bar"> -->
                     <div class="progress"></div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
